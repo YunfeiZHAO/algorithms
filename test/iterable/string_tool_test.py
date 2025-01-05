@@ -17,5 +17,5 @@ class TestDivideSimply(unittest.TestCase):
     def test_repeated_chars(self):
         self.assertEqual(divide_simply('aabbcc', 'abc'), ('abc', ''))
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
