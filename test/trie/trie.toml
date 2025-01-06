@@ -1,0 +1,9 @@
+module = "trie.trie"
+
+[[cases]]
+name = "case1"
+class = "Trie"
+init_args = []
+input_function = ["insert","search","search","startsWith","insert","search"]
+input_params = [["apple"],["apple"],["app"],["app"],["app"],["app"]]
+expected = ["None", true, false, true, "None", true]
