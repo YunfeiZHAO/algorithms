@@ -1,0 +1,8 @@
+{
+"divide_simply": [
+    {
+        "input": ["abc", "def"],
+        "expected": ["abc", "def"]
+    }
+    ]
+}

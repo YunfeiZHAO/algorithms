@@ -35,3 +35,54 @@ class Trie:
                 return False
             cur = cur[w]
         return True
+
+
+class WordDictionary:
+    """https://leetcode.com/problems/design-add-and-search-words-data-structure/"""
+    def __init__(self):
+        self._trie = {}
+
+    def addWord(self, word: str) -> None:
+        """ insert a word in trie """
+        cur = self._trie
+        for w in word:
+            if w not in cur:
+                cur[w] = {}
+            cur = cur[w]
+        cur['word'] = True
+
+    def dfs(self, cur, postfix):
+        """dfs to check the postfix"""
+        if len(postfix) == 0:
+            return 'word' in cur
+
+        c = postfix[0]
+        postfix = postfix[1:]
+        if c == '.':
+            result = False
+            for key in cur:
+                if key != 'word' and self.dfs(cur[key], postfix):
+                    result = True
+                    break
+            return result
+        elif not c in cur:
+            return False
+        else:
+            return self.dfs(cur[c], postfix)
+
+    def search(self, word: str) -> bool:
+        """ check if a word in trie, 
+            the word can contain '.' which is a wildcard
+        """
+        return self.dfs(self._trie, word)
+
+if __name__ == "__main__":
+    obj = WordDictionary()
+    obj.addWord("a")
+    obj.addWord("a")
+    # obj.search(".")
+    # obj.search("a")
+    # obj.search("aa")
+    # obj.search("a")
+    # obj.search(".a")
+    obj.search("a.")

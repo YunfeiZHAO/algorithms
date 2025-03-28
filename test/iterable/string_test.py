@@ -1,7 +1,14 @@
-import unittest
+
+from test.generic_test import GenericTestCase
 from iterable.string import divide_simply
 
-class TestDivideSimply(unittest.TestCase):
+class TestString(unittest.TestCase):
+    """ simple test cases for string module """
+
+    def test_divide_simply(self):
+
+
+
     def test_no_common_chars(self):
         self.assertEqual(divide_simply('abc', 'def'), ('abc', 'def'))
 
