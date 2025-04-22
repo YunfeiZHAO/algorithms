@@ -23,7 +23,7 @@ def minimum_bribes(q):
     """ a queue [1,3,2,4,5], each number is the original place (increase order), 
         3 asked 2 for a bride, each element can ask for maximum 2 times of brides.
     """
-    total_bribes = 0
+    total_brides = 0
     for i, p in enumerate(q):
         adv = p - (i+1)
         if adv > 2:
@@ -34,8 +34,8 @@ def minimum_bribes(q):
             # only the element before original place can be reached by an element after it.
             # as all elements can have maximum two brides
             if q[j] > q[i]:
-                total_bribes += 1
-    print(total_bribes)
+                total_brides += 1
+    print(total_brides)
 
 def minimum_swaps(arr):
     """ get mini sweap time for a un ordered array from an order consequetive array

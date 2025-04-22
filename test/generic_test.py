@@ -2,7 +2,7 @@
 import json
 import unittest
 
-from iterable.string import divide_simply
+from iterable.string_tool import divide_simply
 
 
 class GenericTestCase(unittest.TestCase):
