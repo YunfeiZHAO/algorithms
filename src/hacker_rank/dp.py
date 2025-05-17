@@ -65,15 +65,23 @@ def candies(n, arr):
 def decibinaryNumbers(x):
     """ Hackerrank: Decibinary Numbers
         get the xth 1-index decibinary number
-        the 123: 1*2^2 + 2*2^1 + 3*2^0
-        if the value is the same, 2 and 10, they
-        are ordered by decimam value
+        the 123: 1* 2^2 + 2* 2^1 + 3* 2^0
+        if the converted to decimal value is the same, 2 and 10, they
+        are ordered by decimal value of the representation string 10 > 2
+        so 
+        x = 3 we have 2
+        x = 4 we have 10
     """
     deci_n = [0,1]
-    for 
+    
+
+
+
 
 
 
 if __name__ == '__main__':
     arr = [2,1,5,8,4]
     print(maxSubsetSum(arr))
+
+

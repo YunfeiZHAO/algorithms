@@ -32,7 +32,7 @@ def reverseShuffleMerge(s):
     """
     counts = collections.Counter(s) # every element need to reach this counts
     target = {v: c//2 for v,c in counts.items()}
-    other = {v: c//2 for v,c in counts.items()}
+    other = target.copy()
     buff = []
     for i in range(len(s)-1, -1, -1):
         c = s[i]

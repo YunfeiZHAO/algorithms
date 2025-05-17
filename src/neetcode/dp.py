@@ -16,7 +16,24 @@ def climbStairs(n: int) -> int:
     return ways
 
 
+def perfect_squares(n):
+    """https://leetcode.com/problems/perfect-squares/description/
+        O((n*n)^(1/2))
+    """
+    dp = [n] * (n+1) # worst case where n will be add with n of 1
+    dp[0] = 0 # base case
+
+    for target in range(1, n+1):
+        for s in range(1, target + 1):
+            square = s * s
+            if target - square < 0:
+                break
+            dp[target] = min(dp[target], dp[target - square] + 1)
+    return dp[n]
+
+
 if __name__ == '__main__':
-    print(climbStairs(4))
+    # print(climbStairs(4))
+    print(perfect_squares(5))
 
 

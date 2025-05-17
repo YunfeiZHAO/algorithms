@@ -1,6 +1,7 @@
 """question related to stacks and queues"""
 from collections import namedtuple, deque
 
+
 def largestRectangle(h):
     """ h is an array of heights, find the larges surface that
         you can achieve with k consecutive elements in h
@@ -26,12 +27,8 @@ def largestRectangle(h):
             max_surf = cur_surf
     return max_surf
 
+
 def calculate_spans(arr):
-    """
-        Given an integer array of size , 
-        find the maximum of the minimum(s) of every window size in the array.
-        The window size varies from 1 to len(arr).
-    """
     n = len(arr)
     left_span = [-1] * n
     right_span = [n] * n
@@ -56,7 +53,13 @@ def calculate_spans(arr):
         
     return left_span, right_span
 
+
 def riddle(arr):
+    """
+        Given an integer array of size , 
+        find the maximum of the minimum(s) of every window size in the array.
+        The window size varies from 1 to len(arr).
+    """
     n = len(arr)
     left_span, right_span = calculate_spans(arr)
     

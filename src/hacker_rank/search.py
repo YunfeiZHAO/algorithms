@@ -47,7 +47,7 @@ def whatFlavors(cost, money):
 
 
 def triplets(a, b, c):
-    """ a, b, c three list. find number of tuple (i, j , k) b[j] >= a[i] and b[j] >= c[i]"""
+    """ a, b, c three list. find number of tuple (i, j , k) b[j] >= a[i] and b[j] >= c[k]"""
     total = 0
     p_a = 0
     l_a = len(a)
