@@ -7,7 +7,7 @@ name = "algorithms"
 version = "0.1"
 description = "Some algorithms implementation"
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.12"
 dependencies = [
     # List your dependencies here, e.g., "numpy>=1.19.0"
 ]
@@ -15,3 +15,14 @@ dependencies = [
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.poetry]
+name = "algorithms"
+version = "0.1"
+description = "Some algorithms implementation"
+authors = []
+packages = [{ include = "algorithms", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.12"
+pandas = "^2.2.2"
+numpy = "^2.0.0"
