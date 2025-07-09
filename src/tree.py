@@ -218,6 +218,41 @@ def checkBST(root):
     return is_bst(root)
 
 
+
+def diameter_of_binaryTree(root: TreeNode|None) -> int:
+    """ Calculate the diameter of a binary tree.
+        https://neetcode.io/problems/binary-tree-diameter
+        The diameter is the length of the longest path between any two nodes in the tree.
+        This path may or may not pass through the root.
+
+        idea: check the depth of left and right subtrees for each node, and for the root,
+        the diameter is also the sum of the depth of left and right subtrees.
+
+        Args:
+            root: root of the binary tree
+        Returns:
+            int: the diameter of the binary tree
+    """
+    max_diameter = 0
+
+    def dfs(node: TreeNode|None) -> int:
+        nonlocal max_diameter
+        if not node:
+            return 0
+
+        left_depth = dfs(node.left)
+        right_depth = dfs(node.right)
+
+        # Update the maximum diameter found so far
+        max_diameter = max(max_diameter, left_depth + right_depth)
+
+        # Return the depth of this subtree
+        return max(left_depth, right_depth) + 1
+
+    dfs(root)
+    return max_diameter
+
+
 if __name__ == '__main__':
     c = [12,10,8,12,14,12]
     edges = [[1,2],[1,3],[1,4],[2,5],[4,6]]
