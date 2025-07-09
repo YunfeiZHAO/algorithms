@@ -1,5 +1,28 @@
 """ position related problems"""
 
+def merge(intervals: list[list[int]]) -> list[list[int]]:
+    """ merge overlapping intervals
+        [[1,3],[2,4],[5,7],[6,8]] -> [[1,4],[5,8]]
+        [[1,4],[2,3]] -> [[1,4]]
+        nlog(n) time complexity
+        link: https://leetcode.com/problems/merge-intervals/
+        first sort the intervals by start time, then iterate through them,
+        if the current interval overlaps with the last merged interval, merge them,
+    """
+    if not intervals:
+        return []
+    intervals.sort(key=lambda x: x[0])
+    it = iter(intervals)
+    merged = [next(it)]
+    for current in it:
+        last = merged[-1]
+        if last[1] >= current[0]:
+            last[1] = max(last[1], current[1])
+        else:
+            merged.append(current)
+    return merged
+
+
 def left_rotation(l:list, d:int):
     """ left rotate n position of a iterable, inplace method"""
     def reverse(l, start, end):

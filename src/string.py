@@ -1,6 +1,23 @@
 """ String manipulation"""
 from collections import Counter
 
+def strStr(haystack: str, needle: str) -> int:
+    """ Return the index of first occurrence of needle in haystack, or -1 if not found
+        This is the implementation of find() function in Python.
+        time O(n*m) memory O(1)
+    """
+    n_needle = len(needle)
+    for i in range(len(haystack) - n_needle + 1):
+        match = True
+        for j, v in enumerate(needle):
+            if haystack[i+j] != v:
+                match = False
+                break
+        if match:
+            return i
+    return -1
+
+
 def isValid(s):
     """ For a string, check if remove at most 1 char, all frequences of chars are equal"""
     counts = Counter(s)
