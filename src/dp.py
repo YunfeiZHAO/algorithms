@@ -75,6 +75,24 @@ def decibinaryNumbers(x):
     deci_n = [0,1]
     
 
+def coin_change(coins: list[int], amount: int) -> int:
+    """ https://leetcode.com/problems/coin-change/
+        Get the minimum number of coins to get the amount.
+        [datadog]
+    """
+    # Initialize the dp array. Use a large value (amount + 1) as infinity.
+    dp = [amount + 1] * (amount + 1)
+    dp[0] = 0  # Base case: 0 coins needed for amount 0
+
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if (prev := i - coin) >= 0:
+                # get the min coins we can use in current step
+                # based on the coins we already get before.
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+
+    return dp[amount] if dp[amount] != amount + 1 else -1
+
 
 
 

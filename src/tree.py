@@ -253,6 +253,24 @@ def diameter_of_binaryTree(root: TreeNode|None) -> int:
     return max_diameter
 
 
+class Node:
+    def __init__(self, val: Optional[int] = None, children: Optional[List['Node']] = None):
+        self.val = val
+        self.children = children
+
+
+def maxDepth(self, root: 'Node') -> int:
+    """ Get the maximum depth of N-ary tree
+        https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
+        [Datadog]
+    """
+    if not root:
+        return 0
+    if not root.children:
+        return 1
+    return 1 + max(map(self.maxDepth, root.children))
+
+
 if __name__ == '__main__':
     c = [12,10,8,12,14,12]
     edges = [[1,2],[1,3],[1,4],[2,5],[4,6]]
