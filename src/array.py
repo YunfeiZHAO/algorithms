@@ -149,7 +149,7 @@ def longestMountain(arr: List[int]) -> int:
     return max_length
 
 
-def longestMountain_one_pass(arr: List[int]) -> int:
+def longestMountain_one_pass(arr: list[int]) -> int:
     l, r, n = 0, 1, len(arr)
     passed = False
     max_length = 0
@@ -167,6 +167,98 @@ def longestMountain_one_pass(arr: List[int]) -> int:
     return max_length
 
 
+def merge_sorted_array(nums1:list[int], nums2:list[int]):
+    """ Merge two sorted array nums1 and nums2 into a new sorted interger array
+        Merge Sorted Array
+        https://leetcode.com/problems/merge-sorted-array
+        Do not return anything, modify nums1 in-place instead. Fill from back to front.
+    """
+    m, n = len(nums1), len(nums2)
+    i, j, cur = m-1, n-1, m+n-1
+    while(i>=0 or j>=0):
+        if len(nums1)==0 or i<0:
+            nums1[cur] = nums2[j]
+            j-=1
+        elif len(nums2)==0 or j<0:
+            nums1[cur] = nums1[i]
+            i-=1
+        elif nums1[i] > nums2[j]:
+            nums1[cur] = nums1[i]
+            i-=1
+        else:
+            nums1[cur] = nums2[j]
+            j-=1
+        cur-=1
+
+
+def partition(nums: list[int], pivot_idx: int) -> int:
+    """
+    Partition the array using nums[pivot_idx] as pivot.
+    Returns the final index of the pivot.
+    """
+    pivot = nums[pivot_idx]
+    nums[pivot_idx], nums[-1] = nums[-1], nums[pivot_idx]  # Move pivot to end
+    store_idx = 0
+    for i in range(len(nums) - 1):
+        if nums[i] < pivot:
+            nums[i], nums[store_idx] = nums[store_idx], nums[i]
+            store_idx += 1
+    nums[store_idx], nums[-1] = nums[-1], nums[store_idx]  # Move pivot to its final place
+    return store_idx
+
+
+
+def find_kth(nums:list[int], k:int) -> int:
+    """ Find K-th smallest element in an array
+        Quick Select method: it can help found the k-th biggest number of unordered list. O(n)
+            It is similar to the partition process in quick sort.
+            We suppose target is in the nums list
+            1. Choose a pivot element from the array.
+            2. Partition the array into two parts: elements less than the pivot and elements greater than the pivot.
+            3. After partitioning, the pivot is in its final sorted position.
+            4. If the pivot’s position is k, you’ve found the k-th smallest element.
+            5. If k is less, repeat the process on the left part; if more, repeat on the right part.
+            Time Complexity: Average: O(n)
+            Worst-case: O(n²) (rare, if bad pivots are always chosen)
+    """
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        # You can choose a better pivot strategy if you want
+        # here we take the middle one
+        pivot_idx = left + (right - left) // 2
+        pivot_final = partition(nums[left:right+1], pivot_idx - left) + left
+        if pivot_final == k:
+            return nums[pivot_final]
+        elif pivot_final < k:
+            left = pivot_final + 1
+        else:
+            right = pivot_final - 1
+    return -1  # k is out of bounds
+
+
+def median(nums:list[int]) -> int:
+    """ Given an unsorted array, find the median of it.
+        We can inspired from quick select, and get a O(2n) method.
+        We can decompose it to find the kth_largest elements.
+    """
+
+
+def find_median_sorted_array(nums1:list[int], nums2:list[int]) -> int:
+    """ Find the median of two sorted arrays
+        How to get the kth element in A, B? find_kth(A,B,k)
+    """
+    k = (len(nums1) + len(nums2))//2
+    find_kth(nums1, nums2, k)
+
+
 if __name__ == '__main__':
-    arr = [7, 1, 3, 2, 4, 5, 6]
-    print(minimum_swaps(arr))
+    # arr = [7, 1, 3, 2, 4, 5, 6]
+    # print(minimum_swaps(arr))
+
+    # nums =  [7, 1, 3, 2, 4, 5, 6]
+    # print(partition(nums, 3))
+    # print(nums)
+
+
+    nums =  [7, 3, 10, 1, 5, 8]
+    print(find_kth(nums, 4))

@@ -127,6 +127,20 @@ def removeNthFromEnd(head: Optional[ListNode], n: int) -> Optional[ListNode]:
     return dummy.next
 
 
+def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    """reverse a list
+    https://neetcode.io/problems/reverse-a-linked-list
+    """
+    prev = None
+    cur = head
+    while cur:
+        next_node = cur.next
+        cur.next = prev
+        prev = cur
+        cur = next_node
+    return prev
+
+
 if __name__ == "__main__":
     # head = ListNode(1)
     # head.add_list([2, 3, 4, 5])

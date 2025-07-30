@@ -271,6 +271,10 @@ def maxDepth(self, root: 'Node') -> int:
     return 1 + max(map(self.maxDepth, root.children))
 
 
+
+
+
+
 if __name__ == '__main__':
     c = [12,10,8,12,14,12]
     edges = [[1,2],[1,3],[1,4],[2,5],[4,6]]

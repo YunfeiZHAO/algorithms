@@ -44,5 +44,32 @@ def super_bitstring(n:int, bit_strings:List):
         super_set.update(super_strings)
     return super_set
 
+
+def get_sum(a: int, b: int) -> int:
+    """ https://neetcode.io/problems/sum-of-two-integers
+        add two integer without + operation
+    """
+    # 0x  hexadecimal (base-16) number
+    # 32 bits integer max, 01111111 11111111 11111111 11111111
+    MAX_INT = 0x7FFFFFFF
+    # Mask to get last 32 bits, 11111111 11111111 11111111 11111111
+    mask = 0xFFFFFFFF
+
+    while b != 0:
+        # Calculate sum without carry using XOR
+        sum_ = (a ^ b) & mask
+        # Calculate carry using AND, then shift left by 1
+        carry = ((a & b) << 1) & mask
+        # Prepare for next iteration
+        a, b = sum_, carry
+    # If a is greater than MAX_INT, it's a negative number in 32-bit
+    if a > MAX_INT:
+        # Convert to Python's negative integer using two's complement
+        return ~(a ^ mask)
+    else:
+        return a
+
+
 if __name__ == "__main__":
-    print(super_bitstring(4, [9,2]))
+    # print(super_bitstring(4, [9,2]))
+    print(get_sum(1, 9))

@@ -1,5 +1,6 @@
 """ String manipulation"""
-from collections import Counter
+from collections import Counter, defaultdict
+import re
 
 
 def strStr(haystack: str, needle: str) -> int:
@@ -124,4 +125,113 @@ def most_common_word(paragraph: str, banned: list[str]) -> str:
         return the most frequent word that is not banned.
         [Datadog]
     """
+    # Method 1
+    def isAlphabet(c:str) -> bool:
+        if ("a"<=c and c <= "z") or ("A"<=c and c <= "Z"):
+            return True
+        else:
+            return False
+    tokens = []
+    token = ""
+    for c in paragraph:
+        if isAlphabet(c):
+            token += c.lower()
+        else:
+            if len(token) > 0:
+                tokens.append(token)
+            token = ""
+    if len(token) > 0:
+        tokens.append(token)
+    banned = set(banned)
+    counts = Counter(tokens)
+    max_count = 0
+    chosed = None
+    for word, count in counts.items():
+        if word not in banned and count > max_count:
+            chosed = word
+            max_count = count
+    # return chosed
     
+    # Method 2 regex
+    words = re.findall(r'\w+', paragraph.lower())
+    bannet_set = set(banned)
+    count = Counter(i for i in words if i not in bannet_set)
+    return count.most_common(1)[0][0] # most_common(k) return the top k tuples
+
+
+def odd_string(words: list[str]) -> str:
+    """ odd string difference
+        https://leetcode.com/problems/odd-string-difference
+        [Datadog]
+    """
+    n = len(words[0])
+    def get_difference(word:str, n:int) -> str:
+        diff = ""
+        for i in range(n - 1):
+            diff += str(ord(word[i+1]) - ord(word[i])) + "-"
+        return diff
+
+    # Get patterns for first 3 words to determine which is common
+    patterns = [get_difference(words[i], n) for i in range(3)]
+    
+    # Determine the common pattern
+    if patterns[0] == patterns[1]:
+        common_pattern = patterns[0]
+    elif patterns[0] == patterns[2]:
+        common_pattern = patterns[0]
+    else:
+        common_pattern = patterns[1]
+
+    # Find and return the word with different pattern
+    for word in words:
+        if get_difference(word, n) != common_pattern:
+            return word
+
+
+def countCharacters(words: list[str], chars: str) -> int:
+    """ 1160. Find Words That Can Be Formed by Characters
+        https://leetcode.com/problems/find-words-that-can-be-formed-by-characters
+        [Datadog]
+    """
+    char_count = Counter(chars)
+    total = 0
+    for word in words:
+        word_count = Counter(word)
+        if len(word_count - char_count) == 0:
+            total += len(word)
+    return total
+
+
+def gcdOfStrings(str1: str, str2: str) -> str:
+    """ 1071. Greatest Common Divisor of Strings
+        https://leetcode.com/problems/greatest-common-divisor-of-strings
+    """
+    def is_divisor(divident:str, divisor:str) -> bool:
+        """check with the divident and divisor relation is correct"""
+        l1 = len(divident)
+        l2 = len(divisor)
+        if l1 % l2 != 0:
+            return False
+        else:
+            multi = l1//l2
+            return divident == divisor * multi
+    n1 = len(str1)
+    n2 = len(str2)
+    n = min(n1, n2)
+    i = 0
+    gc = 0
+    while (
+        i < n and 
+        str1[i] == str2[i]
+    ):
+        if (
+            is_divisor(str1, str1[:i+1]) and
+            is_divisor(str2, str2[:i+1])
+        ):
+            gc = i+1 # only update when there is a valide solution
+        i += 1
+    return str1[0:gc]
+
+
+
+

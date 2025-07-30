@@ -8,11 +8,13 @@ class KthLargest:
     """
 
     def __init__(self, k: int, nums: List[int]):
+        """Time Complexity: O(n * log k), where n = len(nums)"""
         self.heap = []
         self.k = k
         self.heapify(nums)
     
     def up(self):
+        """Time Complexity: O(log k)"""
         i = len(self.heap) - 1
         while (parent := (i-1)//2) >= 0:
             if self.heap[i] < self.heap[parent]:
@@ -22,6 +24,7 @@ class KthLargest:
                 return
 
     def down(self):
+        """Time Complexity: O(log k)"""
         i = 0
         n = len(self.heap)
         while True:
@@ -37,21 +40,22 @@ class KthLargest:
             self.heap[i], self.heap[smallest] = self.heap[smallest], self.heap[i]
             i = smallest
 
-    def heapify(self, l):
-        for x in l:
-            self.heap.append(x)
-            self.up()
-            if len(self.heap) > self.k:
-                self.heap[0] = self.heap.pop()
-                self.down()
-
     def heappush(self, x):
+        """Time Complexity: O(log k)"""
         self.heap.append(x)
         self.up()
 
     def add(self, val: int) -> int:
+        """Time Complexity: O(log k)"""
         self.heappush(val)
         if len(self.heap) > self.k:
             self.heap[0] = self.heap.pop()
             self.down()
         return self.heap[0]
+
+    def heapify(self, l):
+        """Time Complexity: O(n * log k), where n = len(l)"""
+        for x in l:
+            self.add(x)
+
+

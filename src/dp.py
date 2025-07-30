@@ -1,4 +1,6 @@
 """ dynamic programming"""
+import math
+from collections import deque
 
 def maxSubsetSum(arr):
     n = len(arr)
@@ -78,7 +80,7 @@ def decibinaryNumbers(x):
 def coin_change(coins: list[int], amount: int) -> int:
     """ https://leetcode.com/problems/coin-change/
         Get the minimum number of coins to get the amount.
-        [datadog]
+        [Datadog]
     """
     # Initialize the dp array. Use a large value (amount + 1) as infinity.
     dp = [amount + 1] * (amount + 1)
@@ -94,12 +96,103 @@ def coin_change(coins: list[int], amount: int) -> int:
     return dp[amount] if dp[amount] != amount + 1 else -1
 
 
+def rob1(nums: list[int])-> int:
+    """ House robber
+        https://leetcode.com/problems/house-robber/
+        [Datadog]
+        idea:
+            robs: is a list contain the max rob I can achieve since the first house
+            robs[i] = max(robs[i-1],  robs[i-2]+nums[i])
+            which means, for each state, we decide either not to steal or we steal it 
+            but do not steal the last one.
+    """
+    n = len(nums)
+    r1, r2 = 0, 0
+    for i in range(0, n):
+        r = max(r2, r1 + nums[i])
+        r1 = r2
+        r2 = r
+    return r
+
+
+def rob2(nums: list[int])-> int:
+    """ House robber 2
+        https://leetcode.com/problems/house-robber-ii
+        The houses are arranged in a circle this time.
+        [Datadog]
+        idea:
+            robs: is a list contain the max rob I can achieve since the first house
+            robs[i] = max(robs[i-1],  robs[i-2]+nums[i])
+            which means, for each state, we decide either not to steal or we steal it 
+            but do not still the last one.
+    """
+    n = len(nums)
+    cur_nums = nums[0: n-1]
+    r1 = rob1(cur_nums)
+    cur_nums = nums[1:]
+    r2 = rob1(cur_nums)
+    return max(r1, r2)
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def rob3(root: TreeNode|None) -> int:
+    """ House robber 3
+        https://leetcode.com/problems/house-robber-iii/description/
+        The house is formed as a binary tree
+        idea:
+            The first sight, use the bfs, but it is not working as children grand children
+            can be seleced at same time as long as they are
+            not on the same sub branch of the parent.
+    """
+    def dfs(node: TreeNode|None) ->tuple[int, int]:
+        """
+        Returns (rob_this, skip_this)
+        - rob_this:  max money if we rob node
+        - skip_this: max money if we skip node
+        """
+        if not node:
+            return 0, 0
+
+        l_rob, l_skip = dfs(node.left)
+        r_rob, r_skip = dfs(node.right)
+
+        rob_this = node.val + l_skip + r_skip
+        skip_this = max(l_rob, l_skip) + max(r_rob, r_skip)
+
+        return rob_this, skip_this
+
+    return max(dfs(root))
+
+
+def triangle_min_sum(triangle: list[list[int]]):
+    """ Ge the minimum path sum from top to bottom of the triangle
+        https://leetcode.com/problems/triangle
+    """
+    n = len(triangle)
+    dp = triangle[-1][:]
+    for i in range(n-2, -1, -1):
+        for j in range(i+1):
+            dp[j] = min(dp[j], dp[j+1]) + triangle[i][j]
+    return dp[0]
+
+
+    
 
 
 
 
 if __name__ == '__main__':
-    arr = [2,1,5,8,4]
-    print(maxSubsetSum(arr))
+    # arr = [2,1,5,8,4]
+    # print(maxSubsetSum(arr))
+
+    triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
+    # triangle = [[-10]]
+    print(triangle_min_sum(triangle))
 
 

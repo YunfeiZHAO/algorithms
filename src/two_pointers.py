@@ -41,6 +41,50 @@ def maxArea(height: list[int]) -> int:
     return max_surface
 
 
+def minAvailableDuration(
+        slots1: list[list[int]],
+        slots2: list[list[int]],
+        duration: int) -> list[int]:
+    """ get the min common time slot with at least duriaton given.
+        https://leetcode.com/problems/meeting-scheduler 
+        [Datadog]
+    """
+    p1 = p2 = 0
+    n1, n2 = len(slots1), len(slots2)
+    slots1.sort()
+    slots2.sort()
+    while p1 < n1 and p2 < n2:
+        s1, e1 = slots1[p1]
+        s2, e2 = slots2[p2]
+
+        start = max(s1, s2)
+        end   = min(e1, e2)
+
+        if end - start >= duration:
+            return [start, start + duration]
+
+        # advance the one that ends earlier
+        if e1 <= e2:
+            p1 += 1
+        else:
+            p2 += 1
+
+    return []
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     s="Was it a car or a cat I saw?"
     print(isPalindrome(s))
