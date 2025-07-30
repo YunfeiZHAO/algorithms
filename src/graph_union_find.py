@@ -1,7 +1,28 @@
-"""union and find"""
-from typing import List
+""" 
+union and find is a good algoritmn to group the nodes (linked) in a undirected graph
+For Weighted Union Find (also know as, union find by rank) without path compression, 
+    time complexity for both union() and find() = O(logN).
+For Weighted Union Find (also known as, union find by rank) with path compression,
+    time complexity for both union() and find() = O(α(N)) ≈ O(1), 
+    where α is the inverse of the Ackerman function.
 
-def max_difference(g_nodes:int, g_from:List, g_to:List):
+https://www.thealgorists.com/Algo/UsefulDataStructures/UnionFind
+"""
+
+class UnionFind():
+    """ Weighted Union Find with Path Compression OR Union Find by Rank with Path Compression"""
+    def __init__(self):
+        """ create the dict to store parent and weights"""
+        self.parents = {}
+        self.weights = {}
+
+    def add(self, item):
+        """ Initialise the parent to itself and weight to 1"""
+        self.parents[item] = item
+        self.weights[item] = 1
+
+
+def max_difference(g_nodes:int, g_from:list, g_to:list):
     """
     In an undirected graph, a connected component of the graph is any group of connected nodes.
     For each connected component, the differece is the max_value - min_value in the component.
@@ -12,6 +33,11 @@ def max_difference(g_nodes:int, g_from:List, g_to:List):
         g_to: [1, 5]
         node 0,1 are connected 2,5 are connected
     Use union and find to get the connected components and their parents.
+
+    g_node = 5
+    g_from = [0,0,4,3]
+    g_to = [1,3,2,4]
+    print(max_difference(g_node, g_from, g_to))
     """
     # parents store the parent of each element (index)
     parents = list(range(g_nodes))
@@ -27,7 +53,7 @@ def max_difference(g_nodes:int, g_from:List, g_to:List):
         return node
 
     def union(u, v):
-        """ union nodes based on the edges"""
+        """ union nodes u and v as one group"""
         p_u = find(u)
         p_v = find(v)
         if p_u == p_v:
@@ -52,8 +78,14 @@ def max_difference(g_nodes:int, g_from:List, g_to:List):
             max_diff = diff
     return max_diff
 
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
-    g_node = 5
-    g_from = [0,0,4,3]
-    g_to = [1,3,2,4]
-    print(max_difference(g_node, g_from, g_to))
+    pass
